@@ -10,12 +10,15 @@ class NodeProps:
         self.root = False
         self.parents = set()
         self.children = set()
-
-
+        self.low = 10000000 # Some high number
+        self.disc = 10000000
+        self.articulation = False
 class Graph:
     def __init__(self, file_loc=None, directed=False):
         self.directed = directed
-        self.node = defaultdict()
+        self.node = defaultdict(NodeProps)
+        self.time = 0
+        self.bi_connected_component_stack = []
 
         if file_loc is not None:  # Make graph from file if available
             self.read_file(file_loc)
@@ -30,7 +33,7 @@ class Graph:
 
     def read_file(self, file_loc):
         c_file = open(file_loc, 'r')
-        n_nodes = c_file.readline()  #First line is the # of vertices
+        n_nodes = c_file.readline()  # First line is the # of vertices
         n_nodes = int(n_nodes[:-1])
         for k in range(int(n_nodes)):
             str_edges = c_file.readline()
@@ -57,19 +60,42 @@ class Graph:
             self.node[node_a].children.add(node_b)
             self.node[node_b].parents.add(node_a)
 
-    def dfs(self, start_index, graph=None, dfs_graph = None, parent=-1):
-        if dfs_graph is None:
-            dfs_graph = Graph(directed = True)
+    def add_n_nodes(self, n):
+        for k in range(n):
+            self.add_node(k + 1)
+
+    def dfs(self, start_index, graph=None, dfs_graph=None):
+
         if graph is None:
             graph = copy.deepcopy(self)
-
+        if dfs_graph is None:
+            dfs_graph = Graph(directed=True)
+            dfs_graph.add_n_nodes(len(graph.node))
+        dfs_graph.node[start_index].low = dfs_graph.time
+        dfs_graph.node[start_index].disc = dfs_graph.time
+        dfs_graph.time += 1
         graph.node[start_index].visited = True
         for c_connection in graph.node[start_index].connections:
-            if graph.node[c_connection].visited is not True:
-                dfs_graph = self.dfs(c_connection, graph=graph, parent=start_index, dfs_graph = dfs_graph)
+            if graph.node[c_connection].visited is False:
 
-        dfs_graph.add_node(start_index)
-        dfs_graph.add_node(parent)
-        dfs_graph.add_edge(parent, start_index)
+                dfs_graph.add_edge(start_index, c_connection)
+                dfs_graph = self.dfs(c_connection, graph=graph, dfs_graph=dfs_graph)
+                dfs_graph.bi_connected_component_stack.append((start_index, c_connection))
+
+                dfs_graph.node[start_index].low = min(dfs_graph.node[c_connection].low, dfs_graph.node[start_index].low)
+
+                if dfs_graph.node[c_connection].low >= dfs_graph.node[start_index].disc and \
+                        len(dfs_graph.node[start_index].parents) != 0:  # Check to see if non-root has a back-edge
+                        print(dfs_graph.bi_connected_component_stack)
+                        dfs_graph.bi_connected_component_stack = []
+
+                elif len(dfs_graph.node[start_index].children) > 1 and \
+                        len(dfs_graph.node[start_index].parents) == 0:  # Check to see if root has >1 child
+                        print(dfs_graph.bi_connected_component_stack)
+                        dfs_graph.bi_connected_component_stack = []
+            elif c_connection not in dfs_graph.node[start_index].parents:  # Already discovered, earlier than current disc time?
+                dfs_graph.bi_connected_component_stack.append((start_index, c_connection))
+                dfs_graph.node[start_index].low = min(dfs_graph.node[c_connection].disc,
+                                                      dfs_graph.node[start_index].low)
 
         return dfs_graph
