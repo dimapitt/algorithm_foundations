@@ -1,0 +1,751 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Programming Assignment 1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{PROGRAMMING ASSIGNMENT 1 - DMITRY
+KALIKA}\label{programming-assignment-1---dmitry-kalika}
+
+\subsection{Importing necessary
+modules}\label{importing-necessary-modules}
+
+Modules that I wrote (and didn't write) are first imported. I wrote
+'inversion\_count' to count inversions, 'merge\_sort' to perform merge
+sort and count the number of operations, and 'selection' to select the
+lower median efficiently and count the number of operations. All other
+modules were used for analysis, but not actually used to compute sort or
+compute the medians.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{}Import Modules}
+        \PY{k+kn}{import} \PY{n+nn}{inversion\PYZus{}count} \PY{k}{as} \PY{n+nn}{inv\PYZus{}c}  \PY{c+c1}{\PYZsh{} My inversion counter module}
+        \PY{k+kn}{from} \PY{n+nn}{random} \PY{k}{import} \PY{n}{random}  \PY{c+c1}{\PYZsh{} To generate random numbers}
+        \PY{k+kn}{from} \PY{n+nn}{random} \PY{k}{import} \PY{n}{randrange}  \PY{c+c1}{\PYZsh{} To generate random numbers}
+        \PY{k+kn}{from} \PY{n+nn}{random} \PY{k}{import} \PY{n}{shuffle}  \PY{c+c1}{\PYZsh{} Used in inversion experiment to shuffle the array subsets}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}  \PY{c+c1}{\PYZsh{} Only used to generate a linearly spaced array for various N\PYZsq{}s in simulation}
+        \PY{k+kn}{import} \PY{n+nn}{merge\PYZus{}sort}  \PY{c+c1}{\PYZsh{} My merge sort module}
+        \PY{k+kn}{import} \PY{n+nn}{selection}  \PY{c+c1}{\PYZsh{} My select module}
+        \PY{k+kn}{import} \PY{n+nn}{statistics} \PY{k}{as} \PY{n+nn}{stats}  \PY{c+c1}{\PYZsh{} Statistics module to verify median}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}  \PY{c+c1}{\PYZsh{} Plotting module}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{style} \PY{k}{as} \PY{n+nn}{sty}  \PY{c+c1}{\PYZsh{} More for plotting module}
+        \PY{k+kn}{import} \PY{n+nn}{math}  \PY{c+c1}{\PYZsh{} For log function}
+        \PY{n}{sty}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fivethirtyeight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Use five\PYZhy{}thirty\PYZhy{}eight blog figure style}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline  
+\end{Verbatim}
+
+
+    \section{Merge Sort and Select
+Example}\label{merge-sort-and-select-example}
+
+First, we will show an example of merge-sort and select in action. A
+random array of size N = 10000 was generated, sorted using merge-sort,
+and then the lower median was computed directly from the sorted array.
+The lower median was also computed using the select algorithm. The lower
+medians computed directly from merge-sort, the select algorithm, and the
+statistics toolbox (not written by me) were computed and compared; the
+number of operations between the two algorithms written by me were
+compared.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{10000}
+        \PY{n}{maxV} \PY{o}{=} \PY{l+m+mi}{100}  \PY{c+c1}{\PYZsh{}Max range of random number}
+        \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{n}{maxV}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{]}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{o}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{linestyle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{None}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsorted Values}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sorted Values}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Value Index}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{sorted\PYZus{}array}\PY{p}{,}\PY{n}{merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{}Do merge sort}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Median from Merge Sort: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{sorted\PYZus{}array}\PY{p}{[}\PY{n}{math}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{sorted\PYZus{}array}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of operations for Merge Sort: }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}ops}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{select\PYZus{}median}\PY{p}{,}\PY{n}{select\PYZus{}ops} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Median from Select: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{select\PYZus{}median}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of operations for Select: }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{select\PYZus{}ops}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Median from python built\PYZhy{}in statistics module: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{stats}\PY{o}{.}\PY{n}{median\PYZus{}low}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Median from Merge Sort: 49.919888824571245
+Number of operations for Merge Sort: 120446
+
+Median from Select: 49.919888824571245
+Number of operations for Select: 36511
+
+Median from python built-in statistics module:  49.919888824571245
+
+    \end{Verbatim}
+
+    \subsection{Discussion}\label{discussion}
+
+All algorithms compute the same lower median! The number of operations
+required by the select algorithm is significantly fewer than performing
+the entire merge-sort
+
+These results are on par with what was expected, however, we still need
+to validate that merge-sort is sorting accurately, and both merge-sort
+and select algorithms are computing the lower median.
+
+\subsection{Algorithm Verification}\label{algorithm-verification}
+
+To verify that the algorithms are working as expected, the merge-sort
+algorithm and select algorithm are tested on arrays of various sizes.
+Merge-sort is first validated by making sure that its results match that
+of the python built-in sorting algorithm. Then, if merge-sort is
+validated, computing the lower median directly is guaranteed to give us
+the correct lower median - this lower median is then used to validate
+the lower median computed by select.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{max\PYZus{}array\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{1000}  \PY{c+c1}{\PYZsh{} Max array size}
+        \PY{n}{max\PYZus{}value\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{100}  \PY{c+c1}{\PYZsh{} Max value of an element in the array}
+        \PY{n}{n\PYZus{}test} \PY{o}{=} \PY{l+m+mi}{10000}  \PY{c+c1}{\PYZsh{} Runs}
+        \PY{n}{array\PYZus{}size} \PY{o}{=} \PY{p}{[}\PY{n}{math}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{n}{max\PYZus{}array\PYZus{}size}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n\PYZus{}test}\PY{p}{)}\PY{p}{]}  \PY{c+c1}{\PYZsh{} randomly select size of arrays}
+        
+        \PY{n}{sorted\PYZus{}fail} \PY{o}{=} \PY{l+m+mi}{0}  \PY{c+c1}{\PYZsh{} Initialize with 0 sorted failures}
+        \PY{n}{median\PYZus{}fail} \PY{o}{=} \PY{l+m+mi}{0}  \PY{c+c1}{\PYZsh{} Initialize with 0 median failures}
+        
+        \PY{k}{for} \PY{n}{c\PYZus{}array\PYZus{}size} \PY{o+ow}{in} \PY{n}{array\PYZus{}size}\PY{p}{:}
+            \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{n}{max\PYZus{}value\PYZus{}size}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{c\PYZus{}array\PYZus{}size}\PY{p}{)}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Generate array of random size}
+            
+            \PY{n}{merge\PYZus{}sorted} \PY{o}{=} \PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Do merge sort}
+            \PY{n}{select\PYZus{}median} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Do select}
+           
+            \PY{n}{rand\PYZus{}array}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Do built in sort}
+            \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{merge\PYZus{}sorted} \PY{o}{==} \PY{n}{rand\PYZus{}array}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{} Count the number of times sort failed}
+                \PY{n}{sorted\PYZus{}fail} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}  \PY{c+c1}{\PYZsh{} Add 1 if sorting failed}
+            
+            \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{merge\PYZus{}sorted}\PY{p}{[}\PY{n}{math}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{merge\PYZus{}sorted}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{==}\PY{n}{select\PYZus{}median}\PY{p}{)}\PY{p}{:}
+                \PY{n}{median\PYZus{}fail} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}  \PY{c+c1}{\PYZsh{} Add 1 if lower median calculation failed}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sorting Failed: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{sorted\PYZus{}fail}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Median Failed: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{median\PYZus{}fail}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Sorting Failed: 0 times
+Median Failed: 0 times
+
+    \end{Verbatim}
+
+    \subsection{Discussion}\label{discussion}
+
+The results above shows that all 10,000 randomly generated arrays were
+correctly sorted, and all merge-sort lower medians match that of the
+select algorithm. This gives us confidence that our merge-sort and
+select algorithms are doing exactly what we expect them to do.
+
+    \section{Algorithm Complexity
+Experiments}\label{algorithm-complexity-experiments}
+
+In order to get a good idea about the number of operations required to
+find the lower median as a function of N, we'll compute 10 medians (each
+from a random array) for N = 1 to 100000. Computing these 10 medians for
+all 100000 values of N would have taken a really long time, so instead
+we will look at 100 values of N, linearly spaced between 1 and 100000.
+For each N, we'll find the average number of operations required to
+compute the median using both the merge-sort and selection algorithms.
+We'll then plot a comparison.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{nRuns} \PY{o}{=} \PY{l+m+mi}{10}
+        \PY{n}{N} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{100000}\PY{p}{,}\PY{n}{num}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}\PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uint64}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Linearly spaced array of size 100 from n = 1 to 100,000}
+        
+        \PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} List to hold average ops as a function of N}
+        \PY{n}{select\PYZus{}avg\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} List to hold average ops as a function of N}
+        
+        \PY{k}{for} \PY{n}{iN} \PY{o+ow}{in} \PY{n}{N}\PY{p}{:}
+            \PY{n}{c\PYZus{}merge\PYZus{}ops} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{c\PYZus{}select\PYZus{}ops} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{for} \PY{n}{iRuns} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{nRuns}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{n}{maxV}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{iN}\PY{p}{)}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Generate random array of size N}
+                \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute merge\PYZhy{}sort operations}
+                \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{select\PYZus{}ops} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute select operations}
+                \PY{n}{c\PYZus{}merge\PYZus{}ops}\PY{o}{+}\PY{o}{=}\PY{n}{merge\PYZus{}sort\PYZus{}ops}
+                \PY{n}{c\PYZus{}select\PYZus{}ops}\PY{o}{+}\PY{o}{=}\PY{n}{select\PYZus{}ops}
+            \PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c\PYZus{}merge\PYZus{}ops}\PY{o}{/}\PY{n}{nRuns}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Find average \PYZsh{} of ops for merge\PYZhy{}sort for array of size N}
+            \PY{n}{select\PYZus{}avg\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c\PYZus{}select\PYZus{}ops}\PY{o}{/}\PY{n}{nRuns}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Find average \PYZsh{} of ops for select for array of size N}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using merge\PYZhy{}sort}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{n}{select\PYZus{}avg\PYZus{}ops}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using select}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Merge\PYZhy{}sort}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Select}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{N (Size of Array)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Operations}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations Comparison Between Select and Merge\PYZhy{}sort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The results above show a larger-scale simulation to compare the number
+of operations required for merge-sort and select algorithms. Though we
+haven't explicitely performed a linear or exponential curve fit, it
+appears from the plot that the select curve is linear, and the
+merge-sort curve is somewhere between linear and exponential ( perhaps
+N*log(N))?
+
+We can figure out what kind of average complexities the algorithms are
+by computing C as a function of N for a given complexity (if we go by
+the notation that \(f(n) = O(g(N))\) is equivalent to \(f(n)\leq Cg(n)\)
+at some \(n>k\)). If C remains relatively constant as a function of N,
+then we know that \(f(n) = Cg(n)\). We will do this for complexities
+\(N\), \(NlogN\), and \(N^2\):
+
+If linear complexity: \(C = \dfrac{ops}{N}\)
+
+If \(N\log(N)\) complexity: \(C = \dfrac{ops}{N\log(N)}\)
+
+If \(N^2\) complexity: \(C = \dfrac{ops}{N^2}\)
+
+Note that \(log(C)\) was plotted instead of \(C\) - this was done
+because the C value can be very low and difficult to visualize,
+especially for the \(N^2\) complexity test. However, If C is constant,
+then \(log(C)\) will also be constant!
+
+Another thing to note is that this method is similar to doing regression
+- if the value C does not change, then \(f(n) = Cg(n)\) at that fixed C.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} C if N}
+        \PY{n}{c\PYZus{}merge} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{c\PYZus{}select} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n+nb}{len}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{n}{c\PYZus{}merge}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{n}{c\PYZus{}select}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{select\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}merge}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using merge\PYZhy{}sort}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}select}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using select}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Merge\PYZhy{}sort}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Select}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N Complexity Test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    C is constant for the select algorithm.
+
+C is NOT constant for the merge-sort algorithm.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} C if NlogN}
+        \PY{n}{c\PYZus{}merge} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{c\PYZus{}select} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n+nb}{len}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{n}{c\PYZus{}merge}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{n}{c\PYZus{}select}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{select\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}merge}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using merge\PYZhy{}sort}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}select}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using select}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Merge\PYZhy{}sort}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Select}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nlog(N) Complexity Test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    C is NOT constant for the select algorithm.
+
+C is constant for the merge-sort algorithm.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} C if N\PYZca{}2}
+         \PY{n}{c\PYZus{}merge} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{c\PYZus{}select} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n+nb}{len}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+             \PY{n}{c\PYZus{}merge}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{c\PYZus{}select}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{select\PYZus{}avg\PYZus{}ops}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{N}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}merge}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using merge\PYZhy{}sort}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{+}\PY{n}{c\PYZus{}select}\PY{p}{)}\PY{p}{;}  \PY{c+c1}{\PYZsh{} Plot average ops as a function of N using select}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Merge\PYZhy{}sort}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Select}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log(C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}N\PYZca{}2\PYZdl{} Complexity Test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    C is NOT constant for the select algorithm.
+
+C is NOT constant for the merge-sort algorithm.
+
+    \subsection{Discussion}\label{discussion}
+
+These 3 plots show that the select algorithm likely has N complexity,
+and the merge-sort has NlogN complexity. We were also able to show that
+neither of the algorithms have a complexity of \(N^2\). It is impressive
+that the C values are constant, even when we took the average of only 10
+median selects at each N - I expected more jitter in the curves.
+
+    \subsection{Inversion Ratio
+Experiment}\label{inversion-ratio-experiment}
+
+In the previou section, the inversion ratio of the input array was not
+considered when computing the number of operations required to compute
+the lower median. In this experiment, we won't vary the size of the
+random array (n=1000), however, we will instead vary the number of
+inversions. To do this, we will generate 10,000 random arrays with
+various inversion scores (0 = no inversions, 1 = max inversions).
+Hopefully, we will get the entire range of inversions since we generated
+so many random arrays! We'll see how the number of inversions affects
+the required number of operations for both merge-sort and select.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{1000}
+         \PY{n}{n\PYZus{}runs} \PY{o}{=} \PY{l+m+mi}{200}
+         
+         \PY{n}{all\PYZus{}inversions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{all\PYZus{}select\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{run} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}runs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1000}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{]}  \PY{c+c1}{\PYZsh{} Generate random array of size N}
+             \PY{n}{inversions} \PY{o}{=} \PY{n}{inv\PYZus{}c}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{ratio\PYZus{}out}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute merge\PYZhy{}sort operations}
+             \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{select\PYZus{}ops} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute select operations}
+             
+             \PY{n}{all\PYZus{}inversions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{inversions}\PY{p}{)}
+             \PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}ops}\PY{p}{)}
+             \PY{n}{all\PYZus{}select\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{select\PYZus{}ops}\PY{p}{)}
+          
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}select\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Merge Sort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Select}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inversion Ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations vs. Inversions (Experiment 1)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    It looks like the number of operations is constant regardless of the
+number of inversions, however, a closer inspection shows that the
+inversion ratio is almost always between 0.48 to 0.52 for a randomly
+generated vector - a really small range. That means we'll have to force
+the number of inversions to be outside this range.
+
+To do this, we'll concatonate vectors whos values are randomly generated
+within different ranges. This will let us force our arrays to be within
+some inversion range. Specifically, we generate 10 subset arrays, where
+each array exists in some range \([1000i+1000]\), where i is the index
+of the subset.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{20}
+         \PY{n}{n\PYZus{}runs} \PY{o}{=} \PY{l+m+mi}{2000}
+         \PY{n}{n\PYZus{}subsets} \PY{o}{=} \PY{l+m+mi}{10}
+         \PY{n}{all\PYZus{}inversions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{all\PYZus{}select\PYZus{}ops} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{run} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}runs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}subsets}\PY{p}{)}\PY{p}{]}
+             \PY{n}{shuffle}\PY{p}{(}\PY{n}{subset}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i\PYZus{}subset} \PY{o+ow}{in} \PY{n}{subset}\PY{p}{:}
+                 \PY{n}{c\PYZus{}rand\PYZus{}array} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1000}\PY{o}{*}\PY{n}{i\PYZus{}subset}\PY{o}{+}\PY{l+m+mi}{1000}\PY{o}{*}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{]}
+                 \PY{n}{rand\PYZus{}array} \PY{o}{=} \PY{n}{rand\PYZus{}array}\PY{o}{+}\PY{n}{c\PYZus{}rand\PYZus{}array}
+         
+             \PY{n}{inversions} \PY{o}{=} \PY{n}{inv\PYZus{}c}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{ratio\PYZus{}out}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{merge\PYZus{}sort\PYZus{}ops} \PY{o}{=} \PY{n}{merge\PYZus{}sort}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute merge\PYZhy{}sort operations}
+             \PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{select\PYZus{}ops} \PY{o}{=} \PY{n}{selection}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{rand\PYZus{}array}\PY{p}{,}\PY{n}{out\PYZus{}ops} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Compute select operations}
+             
+             \PY{n}{all\PYZus{}inversions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{inversions}\PY{p}{)}
+             \PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{merge\PYZus{}sort\PYZus{}ops}\PY{p}{)}
+             \PY{n}{all\PYZus{}select\PYZus{}ops}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{select\PYZus{}ops}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}select\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Merge Sort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Select}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inversion Ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations vs. Inversions (Experiment 2)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}merge\PYZus{}sort\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{all\PYZus{}inversions}\PY{p}{,}\PY{n}{all\PYZus{}select\PYZus{}ops}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Merge Sort}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Select}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inversion Ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Operations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zoomed Operations vs Inversions (Experiment 2)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{500}\PY{p}{,}\PY{l+m+mi}{1250}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Discussion}\label{discussion}
+
+Though we still did not end up with the full range of inversion ratios,
+we had a majority of the space (0.2 to 0.8), and saw some interesting
+trends. Though the average number of operations is lower for merge-sort
+than select across most of inversion ratio range, the select algorithm
+has more high outliers as the number of inversions grows; the select
+algorithm also has much higher variance than the merge-sort algorithm.
+In fact, all medians computed with the select algorithm for arrays with
+an inversion ratio higher than 0.8 require more operations than the
+merge-sort algorithm. Therefore, we can't guarantee that select will
+actually be faster than merge-sort (especially if the inversion ratio is
+high).
+
+Interestingly, the number of operations for merge-sort is maximized when
+the inversion ratio is 0.5 - the function is hyperbolic; the number of
+operations decreases as the inversion ratio increases when the inversion
+ratio is higher than 0.5, and the number of operations also decreases as
+the inversion ratio decreases when the inversion ratio is lower than
+0.5. The average number of operatiosn for select appears to be fairly
+constant until the inversion ratio is high
+(\textasciitilde{}\textgreater{}0.6).
+
+The results from this programming assignment shows that in general, the
+median select algorithm requires fewer operations to compute the median
+than the merge-sort as the complexity is \(N\) of select and \(Nlog(N)\)
+for merge-sort. However, the select algorithm isn't always less
+expensive to compute the lower median. If we know that the inversion
+ratio is high, we will want to use the merge-sort to find the lower
+median instead of the select; furthemore, if we want our lower median
+computation to take a similar amount of time in each iteration, we may
+prefer the merge-sort over select algorithm.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
