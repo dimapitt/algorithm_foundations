@@ -17,11 +17,12 @@ class NodeProps:
         self.discovered = 0
         self.low = 100000000  # Some high number for initialization
 
+
 class Graph:
     def __init__(self, file_loc=None, directed=False):
         self.directed = directed
         self.node = defaultdict(NodeProps)
-        self.time = 0
+        self.time = 1
         self.bi_connected_stack = []
         if file_loc is not None:  # Make graph from file if available
             self.read_file(file_loc)
@@ -67,36 +68,65 @@ class Graph:
         for k in range(n):
             self.add_node(k + 1)
 
-    def dfs_and_biconnected(self,start_index):
-        dfs_graph = self.dfs(start_index)
+    def add_nodes_from_graph(self,graph):
+        for c_node in graph.node:
+            self.add_node(c_node)
+
+    def dfs_and_biconnected(self, start_index=0):
+        dfs_graph = self.dfs(start_index)  # Do the first iteration
         while len(dfs_graph.bi_connected_stack) > 0:
-            print(dfs_graph.bi_connected_stack[-1],end=',')
+            print(dfs_graph.bi_connected_stack[-1], end=',')
             dfs_graph.bi_connected_stack.pop()
         print("")
 
-        return dfs_graph
-    def dfs(self, start_index, graph=None, dfs_graph=None):
+        for start_index in self.node:  # Do another search if not all nodes have been visited yet (i.e., disconnected graph)
+            if self.node[start_index].visited is False:
+                dfs_graph = self.dfs(start_index)  # Do the first iteration
+                while len(dfs_graph.bi_connected_stack) > 0:
+                    print(dfs_graph.bi_connected_stack[-1], end=',')
+                    dfs_graph.bi_connected_stack.pop()
+                print("\n")
 
+        return dfs_graph
+
+    def dfs(self, start_index, graph=None, dfs_graph=None):
+        ## Does more than DFS, also finds articulation points and biconnected components.
         if graph is None:
             graph = copy.deepcopy(self)
         if dfs_graph is None:
             dfs_graph = Graph(directed=True)
-            dfs_graph.add_n_nodes(len(graph.node))
+            dfs_graph.add_nodes_from_graph(graph)
         dfs_graph.node[start_index].low = dfs_graph.time
         dfs_graph.node[start_index].disc = dfs_graph.time
         dfs_graph.time += 1
         graph.node[start_index].visited = True
+        self.node[start_index].visited = True
         for c_connection in graph.node[start_index].connections:
             if graph.node[c_connection].visited is False:
 
+                # Add the edge to dfs_graph and bi_connected_component stack
                 dfs_graph.add_edge(start_index, c_connection)
                 dfs_graph.bi_connected_stack.append((start_index, c_connection))
                 dfs_graph = self.dfs(c_connection, graph=graph, dfs_graph=dfs_graph)
 
+                # Recursive traversal
                 dfs_graph.node[start_index].low = min(dfs_graph.node[c_connection].low, dfs_graph.node[start_index].low)
 
-                if dfs_graph.node[c_connection].low >= dfs_graph.node[start_index].disc and \
-                        len(dfs_graph.node[start_index].parents) != 0:  # Check to see if non-root has a back-edge
+                # Check to see if root has >1 child
+                if len(dfs_graph.node[start_index].children) > 1 and \
+                        len(dfs_graph.node[start_index].parents) == 0:
+                    dfs_graph.node[start_index].articulation = True
+                    while (dfs_graph.bi_connected_stack[-1] != (start_index, c_connection) and
+                           dfs_graph.bi_connected_stack[-1] != (c_connection, start_index)):
+                        print(dfs_graph.bi_connected_stack[-1], end=", ")
+                        dfs_graph.bi_connected_stack.pop()
+                    print(dfs_graph.bi_connected_stack[-1])  # do one last time
+                    dfs_graph.bi_connected_stack.pop()
+                    print("")
+
+                # Check to see if non-root has a back-edge
+                elif dfs_graph.node[c_connection].low >= dfs_graph.node[start_index].disc and \
+                        len(dfs_graph.node[start_index].parents) != 0:
                     dfs_graph.node[start_index].articulation = True
                     while (dfs_graph.bi_connected_stack[-1] != (start_index, c_connection) and
                             dfs_graph.bi_connected_stack[-1] != (c_connection, start_index)):
@@ -106,18 +136,9 @@ class Graph:
                     dfs_graph.bi_connected_stack.pop()
                     print("")
 
-                elif len(dfs_graph.node[start_index].children) > 1 and \
-                        len(dfs_graph.node[start_index].parents) == 0:  # Check to see if root has >1 child
-                    dfs_graph.node[start_index].articulation = True
-                    while (dfs_graph.bi_connected_stack[-1] != (start_index, c_connection) and
-                           dfs_graph.bi_connected_stack[-1] != (c_connection, start_index)):
-                        print(dfs_graph.bi_connected_stack[-1], end=', ')
-                        dfs_graph.bi_connected_stack.pop()
-                    print(dfs_graph.bi_connected_stack[-1])  # do one last time
-                    dfs_graph.bi_connected_stack.pop()
-                    print("")
 
-            elif c_connection not in dfs_graph.node[start_index].parents:  # Already discovered, earlier than current disc time?
+
+            elif c_connection not in dfs_graph.node[start_index].parents:  # We can't just go backwards to a parent, then every value would have a low of 1!
                 dfs_graph.node[start_index].low = min(dfs_graph.node[c_connection].disc,
                                                       dfs_graph.node[start_index].low)
                 if dfs_graph.node[c_connection].disc < dfs_graph.node[start_index].low:
